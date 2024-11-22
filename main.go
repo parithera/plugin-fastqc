@@ -13,7 +13,7 @@ import (
 	types_amqp "github.com/CodeClarityCE/utility-types/amqp"
 	codeclarity "github.com/CodeClarityCE/utility-types/codeclarity_db"
 	plugin_db "github.com/CodeClarityCE/utility-types/plugin_db"
-	plugin "github.com/parithera/plugin-r/src"
+	plugin "github.com/parithera/plugin-fastqc/src"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/driver/pgdriver"

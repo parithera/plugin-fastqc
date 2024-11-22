@@ -17,8 +17,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/uptrace/bun"
 
-	"github.com/parithera/plugin-r/src/types"
-	"github.com/parithera/plugin-r/src/utils/output_generator"
+	"github.com/parithera/plugin-fastqc/src/types"
+	"github.com/parithera/plugin-fastqc/src/utils/output_generator"
 )
 
 // Start is a function that analyzes the source code directory and generates a software bill of materials (SBOM) output.
