@@ -1,1 +1,1 @@
-# plugin-r
+# plugin-fastqc
