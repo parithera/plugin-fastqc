@@ -12,6 +12,8 @@ services:
     volumes:
       - ../../backend:/codeclarity
       - ../../private:/private
+      - ../../backend/plugins/fastqc/tests/fastq:/input
+      - ../../backend/plugins/fastqc/tests/output:/output
     depends_on:
       rabbitmq:
         condition: service_healthy
