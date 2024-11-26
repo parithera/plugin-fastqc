@@ -11,9 +11,7 @@ type Output struct {
 }
 
 type Result struct {
-	Image string `json:"image"`
-	Data  any    `json:"data"`
-	Text  string `json:"text"`
+	Data any `json:"data"`
 }
 
 type AnalysisInfo struct {

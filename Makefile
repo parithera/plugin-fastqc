@@ -3,8 +3,8 @@
 .PHONY        = help build build-prod up down logs test
 
 KIND = plugin
-NAME = r
-REPOSITORY = ceherzog/$(KIND)-$(NAME)
+NAME = fastqc
+REPOSITORY = parithera/$(KIND)-$(NAME)
 
 ## —— 🦉 CodeClarity's plugin Makefile 🦉 ——————————————————————————————————
 help: ## Outputs this help screen

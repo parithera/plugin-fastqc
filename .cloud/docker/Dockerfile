@@ -19,6 +19,7 @@ WORKDIR /codeclarity/${KIND}/${PLUGINNAME}
 ADD .cloud/docker/config/* /root
 RUN apk add --no-cache git msttcorefonts-installer fontconfig openjdk21-jre perl
 RUN update-ms-fonts
+
 RUN go install github.com/air-verse/air@latest
 CMD air -c .air.toml
 
@@ -28,7 +29,18 @@ ARG KIND
 ARG PLUGINNAME
 ENV KIND ${KIND}
 ENV PLUGINNAME ${PLUGINNAME}
-RUN apk add git
+
+WORKDIR /
+RUN wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.12.1.zip
+RUN unzip fastqc_v0.12.1.zip
+RUN rm fastqc_v0.12.1.zip
+RUN ln -s /FastQC/fastqc /usr/local/bin/fastqc
+
+WORKDIR /codeclarity/${KIND}/${PLUGINNAME}
+ADD .cloud/docker/config/* /root
+RUN apk add --no-cache git msttcorefonts-installer fontconfig openjdk21-jre perl
+RUN update-ms-fonts
+
 RUN go install github.com/go-delve/delve/cmd/dlv@latest
 ADD .cloud/docker/config/* /root
 WORKDIR /codeclarity/${KIND}/${PLUGINNAME}
