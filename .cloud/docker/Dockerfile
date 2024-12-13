@@ -65,12 +65,20 @@ FROM alpine:3.20.2 AS plugin
 ARG KIND
 ARG USERNAME
 ARG PLUGINNAME
-RUN adduser -D ${USERNAME}
+RUN apk add --no-cache git msttcorefonts-installer fontconfig openjdk21-jre perl
+RUN update-ms-fonts
+RUN addgroup -S ${USERNAME} --gid 1001 && adduser -S ${USERNAME} -G ${USERNAME} --uid 1001 -D
+# RUN adduser -D ${USERNAME}
 USER ${USERNAME}
+WORKDIR /home/${USERNAME}
+
+RUN wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.12.1.zip
+RUN unzip fastqc_v0.12.1.zip
+RUN rm fastqc_v0.12.1.zip
+ENV PATH=$PATH:/home/${USERNAME}/FastQC
+
 WORKDIR /home/${USERNAME}/${PLUGINNAME}
 COPY --from=plugin-build --chown=codeclarity:codeclarity /codeclarity/${KIND}/${PLUGINNAME}/plugin .
 COPY --from=plugin-build --chown=codeclarity:codeclarity /codeclarity/${KIND}/${PLUGINNAME}/config.json .
-
-RUN mkdir /home/${USERNAME}/private
 
 ENTRYPOINT [ "./plugin" ]
