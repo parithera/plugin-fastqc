@@ -83,8 +83,6 @@ func startAnalysis(args Arguments, dispatcherMessage types_amqp.DispatcherPlugin
 	// GET download path from ENV
 	path := os.Getenv("DOWNLOAD_PATH")
 
-	// Destination folder
-	// destination := fmt.Sprintf("%s/%s/%s", path, organization, analysis.Commit)
 	// Prepare the arguments for the plugin
 	sample := filepath.Join(path, dispatcherMessage.OrganizationId.String(), "samples", messageData["sample"].(string))
 
