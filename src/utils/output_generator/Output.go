@@ -8,38 +8,49 @@ import (
 	exceptionManager "github.com/CodeClarityCE/utility-types/exceptions"
 )
 
-// GetAnalysisTiming calculates the start time, end time, and elapsed time of the analysis.
+// GetAnalysisTiming calculates and returns the start time, end time, and elapsed time of the analysis.
 //
-// It takes the start time as a parameter and returns the start time, end time, and elapsed time in seconds.
+// Parameters:
+//
+//	start: The time when the analysis started.
+//
+// Returns:
+//
+//	A tuple containing the formatted start time, formatted end time, and elapsed time in seconds.
 func GetAnalysisTiming(start time.Time) (string, string, float64) {
-	// Record the current time to calculate the end time of the analysis
+	// Record the current time to determine the analysis end time.
 	end := time.Now()
 
-	// Calculate the elapsed time since the start of the analysis
+	// Calculate the duration of the analysis.
 	elapsed := time.Since(start)
 
-	// Return the formatted start and end times, as well as the elapsed time in seconds
+	// Return the formatted start and end times, along with the elapsed time in seconds.
 	return start.Local().String(), end.Local().String(), elapsed.Seconds()
 }
 
-// WriteFailureOutput writes the failure output for the analysis.
+// WriteFailureOutput constructs a failure output for the analysis.
 //
-// It sets the status of the output to codeclarity.FAILURE and updates the analysis timing information.
-// It also retrieves and sets the private and public errors from the exception manager.
-// The updated output is then returned.
+// Parameters:
+//
+//	output: The initial output object to be updated.
+//	start: The time when the analysis started.
+//
+// Returns:
+//
+//	The updated output object with failure status, timing information, and errors.
 func WriteFailureOutput(output sbomTypes.Output, start time.Time) sbomTypes.Output {
-	// Set the status of the output to failure
+	// Set the analysis status to failure.
 	output.AnalysisInfo.Status = codeclarity.FAILURE
 
-	// Calculate and update the analysis timing information
+	// Calculate and update the analysis timing information.
 	formattedStart, formattedEnd, delta := GetAnalysisTiming(start)
 	output.AnalysisInfo.Time.AnalysisStartTime = formattedStart
 	output.AnalysisInfo.Time.AnalysisEndTime = formattedEnd
 	output.AnalysisInfo.Time.AnalysisDeltaTime = delta
 
-	// Retrieve and set the errors from the exception manager
+	// Retrieve and set any errors that occurred during the analysis.
 	output.AnalysisInfo.Errors = exceptionManager.GetErrors()
 
-	// Return the updated output
+	// Return the updated output object.
 	return output
 }
