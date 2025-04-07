@@ -1,6 +1,6 @@
 {
   "name": "fastqc",
-  "version": "v0.0.1-alpha",
+  "version": "v0.0.2-alpha",
   "image_name": "parithera/plugin-fastqc",
   "depends_on": [],
   "description": "A plugin to run an R script",
