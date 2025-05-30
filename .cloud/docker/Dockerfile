@@ -5,7 +5,7 @@ ARG USERNAME=codeclarity
 ARG PLUGINNAME=plugin
 
 # DEV IMAGE
-FROM golang:1.23.0-alpine AS plugin-dev
+FROM golang:1.24.3-alpine AS plugin-dev
 ARG KIND
 ARG PLUGINNAME
 
@@ -21,14 +21,14 @@ RUN apk add --no-cache git msttcorefonts-installer fontconfig openjdk21-jre perl
 RUN update-ms-fonts
 
 RUN go install github.com/air-verse/air@latest
-CMD air -c .air.toml
+CMD ["air", "-c", ".air.toml"]
 
 # DEBUG IMAGE
-FROM golang:1.23.0-alpine AS plugin-debug
+FROM golang:1.24.3-alpine AS plugin-debug
 ARG KIND
 ARG PLUGINNAME
-ENV KIND ${KIND}
-ENV PLUGINNAME ${PLUGINNAME}
+ENV KIND=${KIND}
+ENV PLUGINNAME=${PLUGINNAME}
 
 WORKDIR /
 RUN wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.12.1.zip
@@ -44,12 +44,12 @@ RUN update-ms-fonts
 RUN go install github.com/go-delve/delve/cmd/dlv@latest
 ADD .cloud/docker/config/* /root
 WORKDIR /codeclarity/${KIND}/${PLUGINNAME}
-CMD /go/bin/dlv debug . --headless --listen=:40000 --accept-multiclient
+CMD ["/go/bin/dlv", "debug", ".", "--headless", "--listen=:40000", "--accept-multiclient"]
 # CMD tail -f /dev/null
 
 
 # BUILD IMAGE
-FROM golang:1.23.0-alpine AS plugin-build
+FROM golang:1.24.3-alpine AS plugin-build
 ARG KIND
 ARG PLUGINNAME
 COPY . /codeclarity/${KIND}/${PLUGINNAME}
@@ -61,7 +61,7 @@ RUN apk add git
 RUN [ "go", "build", "-o", "plugin" ]
 
 # PRODUCTION IMAGE
-FROM alpine:3.20.2 AS plugin
+FROM alpine:3.21.3 AS plugin
 ARG KIND
 ARG USERNAME
 ARG PLUGINNAME
