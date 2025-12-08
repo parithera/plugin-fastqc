@@ -20,7 +20,7 @@ ADD .cloud/docker/config/* /root
 RUN apk add --no-cache git msttcorefonts-installer fontconfig openjdk21-jre perl
 RUN update-ms-fonts
 
-RUN go install github.com/air-verse/air@latest
+RUN go install github.com/air-verse/air@v1.62.0
 CMD ["air", "-c", ".air.toml"]
 
 # DEBUG IMAGE
